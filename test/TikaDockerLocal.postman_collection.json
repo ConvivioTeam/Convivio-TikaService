@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "6f6a266f-8f23-42e8-850b-48f5943a3c28",
+		"name": "Tika Docker (Local)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Tika hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9998/tika",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9998",
+					"path": [
+						"tika"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT TIka file (PDF)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/pdf"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "http://localhost:9998/tika",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9998",
+					"path": [
+						"tika"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT TIka file (Word docx)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "http://localhost:9998/tika",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9998",
+					"path": [
+						"tika"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Detector Resource  file (Word docx)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "http://localhost:9998/detect/stream",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9998",
+					"path": [
+						"detect",
+						"stream"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Detector Resource  file (Apple pages)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "http://localhost:9998/detect/stream",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9998",
+					"path": [
+						"detect",
+						"stream"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Language Resource (Word docx)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/pdf",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "http://localhost:9998/language/stream",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9998",
+					"path": [
+						"language",
+						"stream"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
