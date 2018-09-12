@@ -5,4 +5,4 @@ services:
     image: logicalspark/docker-tikaserver:$TIKASERVER_TAG
     container_name: ${PROJECT_NAME}_tika
     ports:
-      - '${TIKESERVER_PORT}:${TIKESERVER_PORT}'
+      - '${TIKASERVER_PORT}:${TIKASERVER_PORT}'
