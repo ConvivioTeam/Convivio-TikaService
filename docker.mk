@@ -1,6 +1,6 @@
 include .env
 
-.PHONY: up down stop prune ps shell drush logs
+.PHONY: up down stop prune
 
 default: up
 
