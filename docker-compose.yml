@@ -4,5 +4,18 @@ services:
   tika:
     image: logicalspark/docker-tikaserver:$TIKASERVER_TAG
     container_name: ${PROJECT_NAME}_tika
-    ports:
-      - '${TIKASERVER_PORT}:${TIKASERVER_PORT}'
+    # ports:
+    #   - "9998:9998"
+  app:
+    image: golang:${GOLANG_TAG}
+    container_name: ${PROJECT_NAME}_app
+    volumes:
+      - .:/go/src/textextractor
+    working_dir: /go/src/textextractor/app
+    command: go run main.go
+    depends_on:
+      - tika
+    links:
+      - tika
+    environment:
+      TIKA_URL: tika:9998

@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "m0LiR4QKwv2utqqca3frzylAF5U=",
+			"path": "github.com/google/go-tika/tika",
+			"revision": "fe9f7a490ac6260631874005f88d091330a109f1",
+			"revisionTime": "2017-10-17T16:36:03Z"
+		},
+		{
+			"checksumSHA1": "GtamqiJoL7PGHsN454AoffBFMa8=",
+			"path": "golang.org/x/net/context",
+			"revision": "26e67e76b6c3f6ce91f7c52def5af501b4e0f3a2",
+			"revisionTime": "2018-09-11T21:37:47Z"
+		},
+		{
+			"checksumSHA1": "WHc3uByvGaMcnSoI21fhzYgbOgg=",
+			"path": "golang.org/x/net/context/ctxhttp",
+			"revision": "26e67e76b6c3f6ce91f7c52def5af501b4e0f3a2",
+			"revisionTime": "2018-09-11T21:37:47Z"
+		}
+	],
+	"rootPath": "github.com/ConvivioTeam/Convivio-TikaService/app"
+}
