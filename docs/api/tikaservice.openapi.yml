@@ -23,7 +23,7 @@ servers:
         default: 'https'
 tags:
   - name: metadata
-    description: Find out about the datasets
+    description: Find out about the Tika service datasets
 paths:
   /:
     get:
@@ -41,6 +41,8 @@ paths:
                 
   /versions:
     get:
+      tags:
+        - metadata
       operationId: listVersions
       summary: List API versions
       responses:
@@ -126,12 +128,6 @@ components:
         deprecated:
           type: boolean
           example: false
-        links:
-          type: object
-          example:
-            -
-              href: "https://tika.docshare.weareconvivio.com/"
-              rel: "self"
         
 
 
