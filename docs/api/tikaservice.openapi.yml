@@ -1,0 +1,138 @@
+openapi: 3.0.1
+info:
+  title: "DocShare Tika Microservice API"
+  description: >-
+    The Tika microservice allows a DocShare microservice to pass a document 
+    via HTTP PUT and have to extract text from the body and headers of the
+    document. The extracted text is stored in a local MongoDB and can be
+    retrieved at a later point for other purposes, such as preview, indexing,
+    text analysis, etc.
+  version: 1.0.0
+  contact:
+    name: "Convivio DocShare Tika team"
+    url: 'https://developer.docshare.weareconvivio.com/tika'
+    email: "infra+docshare.tika@weareconvivio.com"
+servers:
+  - url: '{scheme}://tika.docshare.weareconvivio.com/'
+    variables:
+      scheme:
+        description: 'The DocShare Tika service API is accessible via https and http'
+        enum:
+          - 'https'
+          - 'http'
+        default: 'https'
+tags:
+  - name: metadata
+    description: Find out about the datasets
+paths:
+  /:
+    get:
+      tags:
+        - metadata
+      responses:
+        '200':
+          description: Returns a list of Tika service resource endpoints
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Resources'
+        default:
+          $ref: '#components/responses/Error'
+                
+  /versions:
+    get:
+      operationId: listVersions
+      summary: List API versions
+      responses:
+        200:
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Versions'
+        default:
+          $ref: '#components/responses/Error'
+components:
+  responses:
+    Error: 
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#components/schemas/Error'
+  schemas:
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    Resources:
+      title: Resources
+      items:
+        $ref: '#components/schemas/Resource'
+    Resource:
+      required:
+        - apiPath
+        - description
+        - apiVersionNumber
+        - apiUrl
+        - apiDocumentationUrl
+      properties:
+        apiPath:
+          type: string
+          example: "/versions"
+        description:
+          type: string
+          example: "List of API versions"
+        apiVersionNumber:
+          type: number
+          example: 1.1
+        apiUrl:
+          type: string
+          example: "https://tika.docshare.weareconvivio.com/versions"
+        apiDocumentationUrl: 
+          type: string
+          example: "https://developer.docshare.weareconvivio.com/tika/api/versions"
+    Versions:
+      title: Versions
+      items:
+        $ref: '#components/schemas/Version'
+    Version:
+      required:
+        - version
+        - id
+        - updated
+        - current
+        - deprecated
+      properties:
+        version:
+          type: number
+          example: 1.1
+        id:
+          type: string
+          example: "v1.1"
+        updated:
+          type: dateTime
+          example: "2018-09-13T16:52:11"
+        current:
+          type: boolean
+          example: true
+        deprecated:
+          type: boolean
+          example: false
+        links:
+          type: object
+          example:
+            -
+              href: "https://tika.docshare.weareconvivio.com/"
+              rel: "self"
+        
+
+
+                
