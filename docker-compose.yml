@@ -4,8 +4,8 @@ services:
   tika:
     image: logicalspark/docker-tikaserver:$TIKASERVER_TAG
     container_name: ${PROJECT_NAME}_tika
-    # ports:
-    #   - "9998:9998"
+    networks:
+      - tika-app
   app:
     image: golang:${GOLANG_TAG}
     container_name: ${PROJECT_NAME}_app
@@ -15,7 +15,29 @@ services:
     command: go run main.go
     depends_on:
       - tika
-    links:
-      - tika
+      - mongo
     environment:
       TIKA_URL: tika:9998
+      MONGO_URL: mongo:27017
+    networks:
+      - mongo-app
+      - tika-app
+  mongo:
+    image: mongo:${MONGO_TAG}
+    container_name: ${PROJECT_NAME}_mongo
+    restart: always
+    environment:
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - MONGODB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+    volumes:
+            - app-data:/data/db
+    networks:
+      - mongo-app
+networks:
+  mongo-app:
+  tika-app:
+volumes:
+  app-data:
