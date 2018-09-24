@@ -24,6 +24,8 @@ servers:
 tags:
   - name: metadata
     description: Find out about the Tika service datasets
+  - name: health
+    description: Health check
 paths:
   /:
     get:
@@ -55,6 +57,42 @@ paths:
                 $ref: '#components/schemas/Versions'
         default:
           $ref: '#components/responses/Error'
+  /health/alive: 
+    get:
+      description: "This endpoint returns a 200 status code when the HTTP server is up running.\nThis status does currently not include checks whether the database connection is working.\nThis endpoint does not require the `X-Forwarded-Proto` header when TLS termination is set.\n\nBe aware that if you are running multiple nodes, the health status will never refer to the cluster state, only to a single instance."
+      tags:
+        - health
+      summary: "Check the Alive Status"
+      operationId: isInstanceAlive
+      responses:
+        200: 
+          description: "Health Status"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/healthStatus'
+        500:
+          $ref: '#components/responses/Error'
+  /health/ready:
+    get:
+      description: "This endpoint returns a 200 status code when the HTTP server is up running and the environment dependencies (e.g.\nthe database) are responsive as well.\n\nThis status does currently not include checks whether the database connection is working.\nThis endpoint does not require the `X-Forwarded-Proto` header when TLS termination is set.\n\nBe aware that if you are running multiple nodes of ORY Hydra, the health status will never refer to the cluster state, only to a single instance."
+      tags:
+        - health
+      summary: "Check the Readiness Status"
+      operationId: isInstanceReady
+      responses:
+        200:
+          description: 'Health status'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/healthStatus;'
+        503:
+          description: 'Health Not Ready status'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/healthNotReadyStatus'
 components:
   responses:
     Error: 
@@ -128,6 +166,21 @@ components:
         deprecated:
           type: boolean
           example: false
+          definitions:
+    healthNotReadyStatus:
+        type: object
+        properties:
+          errors:
+            description: 'Errors contains a list of errors that caused the not ready status.'
+            type: object
+            additionalProperties:
+              type: string
+    healthStatus:
+      type: object
+      properties:
+        status:
+          description: 'Status always contains "ok".'
+          type: string
         
 
 
