@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
   title: "DocShare Tika Microservice API"
   description: >-
@@ -37,9 +37,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/schemas/Resources'
+                $ref: '#/components/schemas/Resources'
         default:
-          $ref: '#components/responses/Error'
+          $ref: '#/components/responses/Error'
                 
   /versions:
     get:
@@ -49,14 +49,9 @@ paths:
       summary: List API versions
       responses:
         200:
-          description: |-
-            200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#components/schemas/Versions'
+          $ref: '#/components/responses/Versions'
         default:
-          $ref: '#components/responses/Error'
+          $ref: '#/components/responses/Error'
   /health/alive: 
     get:
       description: "This endpoint returns a 200 status code when the HTTP server is up running.\nThis status does currently not include checks whether the database connection is working.\nThis endpoint does not require the `X-Forwarded-Proto` header when TLS termination is set.\n\nBe aware that if you are running multiple nodes, the health status will never refer to the cluster state, only to a single instance."
@@ -70,9 +65,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/healthStatus'
+                $ref: '#/components/schemas/HealthStatus'
         500:
-          $ref: '#components/responses/Error'
+          $ref: '#/components/responses/Error'
   /health/ready:
     get:
       description: "This endpoint returns a 200 status code when the HTTP server is up running and the environment dependencies (e.g.\nthe database) are responsive as well.\n\nThis status does currently not include checks whether the database connection is working.\nThis endpoint does not require the `X-Forwarded-Proto` header when TLS termination is set.\n\nBe aware that if you are running multiple nodes of ORY Hydra, the health status will never refer to the cluster state, only to a single instance."
@@ -86,21 +81,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/healthStatus;'
+                $ref: '#/components/schemas/HealthStatus'
         503:
           description: 'Health Not Ready status'
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/healthNotReadyStatus'
+                $ref: '#/components/schemas/HealthNotReadyStatus'
 components:
   responses:
+    Versions:
+      description: |-
+        200 response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Versions'
     Error: 
       description: Unexpected error
       content:
         application/json:
           schema:
-            $ref: '#components/schemas/Error'
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       required:
@@ -115,7 +117,7 @@ components:
     Resources:
       title: Resources
       items:
-        $ref: '#components/schemas/Resource'
+        $ref: '#/components/schemas/Resource'
     Resource:
       required:
         - apiPath
@@ -142,7 +144,7 @@ components:
     Versions:
       title: Versions
       items:
-        $ref: '#components/schemas/Version'
+        $ref: '#/components/schemas/Version'
     Version:
       required:
         - version
@@ -158,7 +160,7 @@ components:
           type: string
           example: "v1.1"
         updated:
-          type: dateTime
+          type: string
           example: "2018-09-13T16:52:11"
         current:
           type: boolean
@@ -166,21 +168,23 @@ components:
         deprecated:
           type: boolean
           example: false
-          definitions:
-    healthNotReadyStatus:
-        type: object
+    HealthNotReadyStatus:
         properties:
           errors:
             description: 'Errors contains a list of errors that caused the not ready status.'
             type: object
+            example:
+              code: 503
+              message: "Internal server error"
             additionalProperties:
               type: string
-    healthStatus:
-      type: object
+              example: "Nginx"
+    HealthStatus:
       properties:
         status:
           description: 'Status always contains "ok".'
           type: string
+          example: "ok"
         
 
 
